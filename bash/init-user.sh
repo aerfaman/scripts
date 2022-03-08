@@ -136,31 +136,32 @@ function_disable_ssh_user_dns(){
 }
 
 function_input(){
-    read -r -p "\033[36m Please input username: \033[0m" input_username
+    echo -e "\033[36m Please input username: \033[0m"
+    read -r  input_username
     user_name=$input_username
     if [ ! -n $user_name ]; then
-      echo "[\033[31m ERROR \033[0m] You must have a username. "
+      echo -e "[\033[31m ERROR \033[0m] You must have a username. "
       exit 1
     fi
-    echo ""
-    read -r -p "\033[36m Please input user password: \033[0m" input_password
+    echo -e "\033[36m Please input user password: \033[0m"
+    read -r  input_password
     user_pass=$input_password
     if [ ! -n $user_pass ]; then
-      echo "[\033[31m ERROR \033[0m] You must have a password. "
+      echo -e "[\033[31m ERROR \033[0m] You must have a password. "
       exit 1
     fi
-    echo ""
-    read -r -p "\033[36m Please input user group name: \033[0m" input_group
+    echo -e "\033[36m Please input user group name: \033[0m"
+    read -r  input_group
     group_name=$input_group
     if [ ! -n $group_name ]; then
-      echo "[\033[31m ERROR \033[0m] You must have a group. "
+      echo -e "[\033[31m ERROR \033[0m] You must have a group. "
       exit 1
     fi
-    echo ""
-    read -r -p "\033[36m Please input your public key content: \033[0m" input_public_key
+    echo -e "\033[36m Please input your public key content: \033[0m"
+    read -r input_public_key
     publick_key=$input_public_key
     if [ ! -n $publick_key ]; then
-      echo "[\033[31m ERROR \033[0m] You must have a public key. "
+      echo -e "[\033[31m ERROR \033[0m] You must have a public key. "
       exit 1
     fi
 }
@@ -176,7 +177,7 @@ main(){
   echo "User created."
   echo "##########################"
   echo 
-  echo "\033[47;30m IMPORTANT!!!IMPORTANT!!!IMPORTANT!!!IMPORTANT!!! \033[0m"
+  echo -e "\033[47;30m IMPORTANT!!!IMPORTANT!!!IMPORTANT!!!IMPORTANT!!! \033[0m"
   echo "##########################"
   read -r -p "The next steps will prohibit root login and password login. 
   Please test to confirm that your public key can log in normally, and the account has sudo privileges, 
@@ -201,8 +202,13 @@ main(){
           exit 1
           ;;
   esac
+  echo -e "\033[32m Success \033[0m "
+  echo Username: $user_name
+  echo Password: $user_pass
+  echo Groupname: $group_name
+
 }
 
 
-main > init-user.log
+main | tee init-user.log
 #echo $user_pass | passwd $user_name

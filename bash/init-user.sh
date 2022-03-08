@@ -136,25 +136,28 @@ function_disable_ssh_user_dns(){
 }
 
 function_input(){
-    read -r -p "Please input username: " input_username
+    read -r -p "\033[36m Please input username: \033[0m" input_username
     user_name=$input_username
     if [ ! -n $user_name ]; then
       echo "[\033[31m ERROR \033[0m] You must have a username. "
       exit 1
     fi
-    read -r -p "Please input user password: " input_password
+    echo ""
+    read -r -p "\033[36m Please input user password: \033[0m" input_password
     user_pass=$input_password
     if [ ! -n $user_pass ]; then
       echo "[\033[31m ERROR \033[0m] You must have a password. "
       exit 1
     fi
-    read -r -p "Please input user group name: " input_group
+    echo ""
+    read -r -p "\033[36m Please input user group name: \033[0m" input_group
     group_name=$input_group
     if [ ! -n $group_name ]; then
       echo "[\033[31m ERROR \033[0m] You must have a group. "
       exit 1
     fi
-    read -r -p "Please input your public key content: " input_public_key
+    echo ""
+    read -r -p "\033[36m Please input your public key content: \033[0m" input_public_key
     publick_key=$input_public_key
     if [ ! -n $publick_key ]; then
       echo "[\033[31m ERROR \033[0m] You must have a public key. "
@@ -173,7 +176,7 @@ main(){
   echo "User created."
   echo "##########################"
   echo 
-  echo "IMPORTANT!!!IMPORTANT!!!IMPORTANT!!!IMPORTANT!!!"
+  echo "\033[47;30m IMPORTANT!!!IMPORTANT!!!IMPORTANT!!!IMPORTANT!!! \033[0m"
   echo "##########################"
   read -r -p "The next steps will prohibit root login and password login. 
   Please test to confirm that your public key can log in normally, and the account has sudo privileges, 

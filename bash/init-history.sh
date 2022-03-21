@@ -9,7 +9,7 @@ then
 USER_IP=`hostname`
 fi
 
-export HISTTIMEFORMAT="[%Y.%m.%d %H:%M:%S][${USER_IP}-${LOGNAME}]"
+export HISTTIMEFORMAT="[%Y.%m.%d %H:%M:%S] [${USER_IP}-${LOGNAME}] "
 export HISTSIZE=10000
 EOF
 

@@ -171,6 +171,11 @@ main(){
   if [ $arg_count = 0 ]; then
     function_input
   fi
+  # Check arg 
+  if [ "$user_name" == "" ] || [ "$user_pass" == "" ] || [ "$group_name" == "" ] || [ "$publick_key" == "" ]; then
+    echo -e "[\033[31m ERROR \033[0m]Please input all arg "
+    exit 1
+  fi
   function_add_user
   function_add_sudo
   function_add_key

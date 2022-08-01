@@ -1,0 +1,15 @@
+[Unit]
+Description={{service_name}} service
+After=network.target
+
+[Service]
+Restart=always
+RestartSec=5
+Type=simple
+WorkingDirectory=/opt/{{service_name}}/
+ExecStart=/opt/{{service_name}}/{{service_name}} start
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -9 $MAINPID
+PrivateTmp=true
+
+[Install]

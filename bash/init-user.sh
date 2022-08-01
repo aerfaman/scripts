@@ -3,7 +3,6 @@
 # group_name=g01
 # user_pass=qwe123
 ssh_config_file=/etc/ssh/sshd_config
-
 arg_count=$#
 
 while getopts ":u:p:g:k:h" optname
@@ -166,6 +165,28 @@ function_input(){
     fi
 }
 
+function_create_ssh_key(){
+  echo "Create a new ssh key"
+}
+
+function_stop_firewalld(){
+  echo "function_stop_firewalld"
+  echo "Stop firewalld service"
+  systemctl stop firewalld
+  echo "Disable firewalld service"
+  systemctl disable firewalld
+  echo "Stop iptables service"
+  systemctl stop iptables
+  echo "Disable iptables service"
+  systemctl disable iptables
+}
+
+function_disable_selinux(){
+  echo "function_disable_selinux"
+  setenforce 0
+  sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+  echo "\033[32m Disabled selinux, Please restart system. \033[0m "
+}
 
 main(){
   if [ $arg_count = 0 ]; then
@@ -190,6 +211,7 @@ main(){
   case $input in
       [yY][eE][sS]|[yY])
           echo "Yes"
+          function_disable_selinux
           function_disable_root_ssh
           function_disable_ssh_password
           function_disable_ssh_user_dns

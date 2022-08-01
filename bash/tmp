@@ -1,0 +1,25 @@
+export HISTORY_FILE=/var/log/`date '+%Y%m'`.log
+
+export PROMPT_COMMAND='{ date "+%Y-%m-%d %T ##### $(who am i |awk "{print \$1\" \"\$2\" \"\$5}")  #### $(history 1 | { read x cmd; echo "$cmd"; })"; } >> $HISTORY_FILE'
+
+PROMPT_COMMAND='touch /tmp/last_command; var="$(cat /tmp/last_command)"; exec >/dev/tty; exec > >(tee /tmp/last_command)'
+
+while read line; do echo $line done < a.log
+while read line; do    
+    echo $line    
+done < file.txt
+
+fun_pro(){
+    touch ~/.last_command
+    while read line; do
+        echo $line >> ~/.atext.log
+    done < ~/.last_command
+    exec >/dev/tty
+    exec 8>&1 9>&2
+    exec 1>&8 2>&2 8>&- 9>&- >(tee ~/.last_command)
+
+}
+export PROMPT_COMMAND='fun_pro'
+
+exec >/dev/tty;exec 2>&1 >> bash.log >2>&1
+exec 3>&1 4 &2 1>(tee /tmp/last_command)

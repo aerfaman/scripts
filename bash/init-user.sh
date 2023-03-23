@@ -2,7 +2,7 @@
 ssh_config_file=/etc/ssh/sshd_config
 arg_count=$#
 
-while getopts ":u:p:g:k:h:t" optname
+while getopts ":u:p:g:k:t:h" optname
 do
     case "$optname" in
       "u")
@@ -22,7 +22,7 @@ do
         publick_key=$OPTARG
         ;;
       "t")
-        echo "init public key is : $OPTARG"
+        echo "system setting is : $OPTARG"
         system_setting=$OPTARG
         ;;
       "h")

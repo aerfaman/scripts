@@ -2,7 +2,7 @@
 ssh_config_file=/etc/ssh/sshd_config
 arg_count=$#
 
-while getopts ":u:p:g:k:h" optname
+while getopts ":u:p:g:k:h:t" optname
 do
     case "$optname" in
       "u")

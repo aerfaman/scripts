@@ -21,12 +21,17 @@ do
         echo "init public key is : $OPTARG"
         publick_key=$OPTARG
         ;;
+      "t")
+        echo "init public key is : $OPTARG"
+        system_setting=$OPTARG
+        ;;
       "h")
         echo "-h : This help message."
         echo "-a : New user username."
         echo "-p : New user password."
         echo "-g : New user group."
         echo "-k : New user public key."
+        echo "-t : System setting. default is: no."
         echo "Example: sh init-user.sh -a user01 -p 123123 -g group01 -k ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAA....."
         ;;
       ":")
@@ -222,15 +227,17 @@ main(){
   function_add_sudo
   function_add_key
   echo "User created."
-  echo "##########################"
-  echo 
-  echo -e "\033[47;30m IMPORTANT!!!IMPORTANT!!!IMPORTANT!!!IMPORTANT!!! \033[0m"
-  echo "##########################"
-  function_choice_execute function_disable_selinux "This step will disable selinux"
-  function_choice_execute function_disable_root_ssh "This step will disable root ssh login"
-  function_choice_execute function_disable_ssh_password "This step will disable ssh password login"
-  function_choice_execute function_disable_ssh_user_dns "This step will disable ssh use dns"
-  echo -e "\033[32m Success \033[0m "
+  if [ "$system_setting" == "yes" ]; then
+    echo "##########################"
+    echo 
+    echo -e "\033[47;30m IMPORTANT!!!IMPORTANT!!!IMPORTANT!!!IMPORTANT!!! \033[0m"
+    echo "##########################"
+    function_choice_execute function_disable_selinux "This step will disable selinux"
+    function_choice_execute function_disable_root_ssh "This step will disable root ssh login"
+    function_choice_execute function_disable_ssh_password "This step will disable ssh password login"
+    function_choice_execute function_disable_ssh_user_dns "This step will disable ssh use dns"
+    echo -e "\033[32m Success \033[0m "
+  fi
   echo Username: $user_name
   echo Password: $user_pass
   echo Groupname: $group_name

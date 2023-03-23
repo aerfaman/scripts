@@ -1,7 +1,4 @@
 #!/bin/bash
-# user_name=u01
-# group_name=g01
-# user_pass=qwe123
 ssh_config_file=/etc/ssh/sshd_config
 arg_count=$#
 
@@ -188,6 +185,30 @@ function_disable_selinux(){
   echo "\033[32m Disabled selinux, Please restart system. \033[0m "
 }
 
+function_choice_execute(){
+  # echo "function_choice_execute"
+  # echo "run: $1"
+  read -r -p "$2 , have you confirmed?? [Y/n] " input
+  case $input in
+      [yY][eE][sS]|[yY])
+          echo "Yes"
+          $1
+          systemctl restart sshd
+          # exit
+          ;;
+
+      [nN][oO]|[nN])
+          echo "Your choice is no, will skip this step."
+          # exit
+            ;;
+
+      *)
+          echo "Invalid input..."
+          # exit 1
+          ;;
+  esac
+}
+
 main(){
   if [ $arg_count = 0 ]; then
     function_input
@@ -205,30 +226,10 @@ main(){
   echo 
   echo -e "\033[47;30m IMPORTANT!!!IMPORTANT!!!IMPORTANT!!!IMPORTANT!!! \033[0m"
   echo "##########################"
-  read -r -p "The next steps will prohibit root login and password login. 
-  Please test to confirm that your public key can log in normally, and the account has sudo privileges, 
-  and then perform the following steps, have you confirmed?? [Y/n] " input
-  case $input in
-      [yY][eE][sS]|[yY])
-          echo "Yes"
-          function_disable_selinux
-          function_disable_root_ssh
-          function_disable_ssh_password
-          function_disable_ssh_user_dns
-          systemctl restart sshd
-          exit
-          ;;
-
-      [nN][oO]|[nN])
-          echo "You have chosen not execute next steps, the script will exit"
-          exit
-            ;;
-
-      *)
-          echo "Invalid input..."
-          exit 1
-          ;;
-  esac
+  function_choice_execute function_disable_selinux "This step will disable selinux"
+  function_choice_execute function_disable_root_ssh "This step will disable root ssh login"
+  function_choice_execute function_disable_ssh_password "This step will disable ssh password login"
+  function_choice_execute function_disable_ssh_user_dns "This step will disable ssh use dns"
   echo -e "\033[32m Success \033[0m "
   echo Username: $user_name
   echo Password: $user_pass

@@ -193,25 +193,31 @@ function_disable_selinux(){
 function_choice_execute(){
   # echo "function_choice_execute"
   # echo "run: $1"
-  read -r -p "$2 , have you confirmed?? [Y/n] " input
-  case $input in
-      [yY][eE][sS]|[yY])
-          echo "Yes"
-          $1
-          systemctl restart sshd
-          # exit
-          ;;
-
-      [nN][oO]|[nN])
-          echo "Your choice is no, will skip this step."
-          # exit
+  if [ ! "$system_setting" == "yes" ]; then
+    read -r -p "$2 , have you confirmed?? [Y/n] " input
+    case $input in
+        [yY][eE][sS]|[yY])
+            echo "Yes"
+            $1
+            systemctl restart sshd
+            # exit
             ;;
 
-      *)
-          echo "Invalid input..."
-          # exit 1
-          ;;
-  esac
+        [nN][oO]|[nN])
+            echo "Your choice is no, will skip this step."
+            # exit
+              ;;
+
+        *)
+            echo "Invalid input..., will skip this step."
+            # exit 1
+            ;;
+    esac
+  else 
+    echo $2
+    $1
+    systemctl restart sshd
+  if
 }
 
 main(){

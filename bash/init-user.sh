@@ -217,7 +217,7 @@ function_choice_execute(){
     echo $2
     $1
     systemctl restart sshd
-  if
+  fi
 }
 
 main(){

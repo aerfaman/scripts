@@ -248,5 +248,5 @@ main(){
 }
 
 
-main | tee init-user.log
+main
 #echo $user_pass | passwd $user_name

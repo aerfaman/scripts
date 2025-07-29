@@ -237,7 +237,7 @@ main(){
   echo 
   echo -e "\033[47;30m IMPORTANT!!!IMPORTANT!!!IMPORTANT!!!IMPORTANT!!! \033[0m"
   echo "##########################"
-  function_choice_execute function_disable_selinux "This step will disable selinux"
+  #function_choice_execute function_disable_selinux "This step will disable selinux"
   function_choice_execute function_disable_root_ssh "This step will disable root ssh login"
   function_choice_execute function_disable_ssh_password "This step will disable ssh password login"
   function_choice_execute function_disable_ssh_user_dns "This step will disable ssh use dns"
